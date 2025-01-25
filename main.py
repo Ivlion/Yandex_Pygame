@@ -1,46 +1,40 @@
 import pygame
 from player import Player
+from mob import Mob
+from random import randint
 
 pygame.init()
 pygame.display.set_caption('Game')
-size = width, height = 500, 500
+size = width, height = 1200, 675
 screen = pygame.display.set_mode(size)
-screen1 = pygame.display.set_mode(size)
+bg = pygame.image.load('sprites/background3.png').convert()
+scroll = 0
 running = True
-all_sprites = pygame.sprite.Group()
 player = Player()
-all_sprites.add(player)
 fps = 60
 c = 0
-vx, vy, v = 0, 0, 100
+mobs = pygame.sprite.Group()
 clock = pygame.time.Clock()
 pygame.display.flip()
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        if event.type == pygame.KEYDOWN and event.key in (119, 97, 115, 100):
-            if event.key == 119:
-                vy -= v
-            elif event.key == 97:
-                vx -= v
-            elif event.key == 115:
-                vy += v
-            elif event.key == 100:
-                vx += v
-        if event.type == pygame.KEYUP and event.key in (119, 97, 115, 100):
-            if event.key == 119:
-                vy += v
-            elif event.key == 97:
-                vx += v
-            elif event.key == 115:
-                vy -= v
-            elif event.key == 100:
-                vx -= v
-
-    screen1.fill((0, 0, 0))
-    player.update(vx / fps, vy / fps)
-    all_sprites.draw(screen1)
+        if event.type == pygame.KEYDOWN and event.key == 32:
+            player.v *= -1
+        if event.type == pygame.KEYUP and event.key == 32:
+            player.v *= -1
+    screen.fill((0, 0, 0))
+    if randint(0, 100) == 1:
+        mobs.add(Mob())
+    mobs.update(fps, player)
+    player.update(fps, height)
+    screen.blit(bg, (0 - scroll, 0))
+    screen.blit(bg, (width - scroll, 0))
+    if not player.died:
+        scroll += 1
+    scroll %= width
+    screen.blit(player.image, (player.rect.x + player.kx, player.rect.y + player.ky))
+    mobs.draw(screen)
     clock.tick(fps)
-    screen.blit(screen1, (0, 0))
     pygame.display.flip()
