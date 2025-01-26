@@ -12,7 +12,7 @@ class Player(pygame.sprite.Sprite):
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 200
         self.rect.y = 20
-        self.rect.width = 60
+        self.rect.width = 55
         self.rect.height = 105
         self.frame = 0
         self.kx = -55
