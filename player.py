@@ -47,6 +47,3 @@ class Player(pygame.sprite.Sprite):
             self.image = self.die[int(self.frame)]
         if 0 <= (self.rect.y + self.v / fps) <= floor - self.rect.height:
             self.rect.y += self.v / fps
-
-
-

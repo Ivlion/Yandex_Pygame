@@ -1,7 +1,10 @@
 import pygame
+from pygame.examples.music_drop_fade import volume
+
 from player import Player
 from mob import Mob, Coin, Heal
 from random import randint
+from se import start_screen, end_screen
 
 pygame.init()
 pygame.display.set_caption('Game')
@@ -9,6 +12,12 @@ size = width, height = 1200, 675
 screen = pygame.display.set_mode(size)
 screen1 = pygame.display.set_mode(size)
 font = pygame.font.Font(None, 24)
+
+pygame.mixer.music.load('song1.mp3')
+pygame.mixer.music.play(-1)
+volume = 1
+
+start_screen(screen, width, height)
 
 bg = pygame.image.load('sprites/background3.png').convert()
 pl_im = {'run':[pygame.image.load(f"sprites/run/{i}.png").convert_alpha() for i in range(15)],
@@ -28,7 +37,17 @@ c = 0
 mobs = pygame.sprite.Group()
 clock = pygame.time.Clock()
 pygame.display.flip()
+time = 0
+st = pygame.time.get_ticks()
 while running:
+    if player.died:
+        if time == 0:
+            time = pygame.time.get_ticks()
+        if pygame.time.get_ticks() - time >= 3000:
+            time = 0
+            end_screen(screen, width, height, player.money, (pygame.time.get_ticks() - st) // 1000)
+            player.died = False
+            player.hp = 3
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
