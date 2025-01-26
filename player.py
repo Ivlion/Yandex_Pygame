@@ -2,12 +2,15 @@ import pygame.sprite
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, run, fly, die):
         super().__init__()
-        self.image = pygame.image.load("sprites/run/0.png")
+        self.run = run
+        self.fly = fly
+        self.die = die
+        self.image = self.run[0]
         self.rect = self.image.get_rect()
-        self.mask = pygame.mask.from_surface(self.image.convert_alpha())
-        self.rect.x = 100
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 200
         self.rect.y = 20
         self.rect.width = 60
         self.rect.height = 105
@@ -16,6 +19,7 @@ class Player(pygame.sprite.Sprite):
         self.ky = -3
         self.v = 300
         self.hp = 3
+        self.money = 0
         self.died = False
 
     def update(self, fps, floor):
@@ -27,20 +31,20 @@ class Player(pygame.sprite.Sprite):
                 self.frame += 0.3
                 if self.frame > 14:
                     self.frame -= 14
-                self.image = pygame.image.load(f"sprites/run/{int(self.frame)}.png")
-                self.mask = pygame.mask.from_surface(self.image.convert_alpha())
+                self.image = self.run[int(self.frame)]
+                self.mask = pygame.mask.from_surface(self.image)
             else:
                 self.kx = -60
                 self.frame += 0.1
                 if self.frame > 14:
                     self.frame -= 14
-                self.image = pygame.image.load(f"sprites/fly/{int(self.frame)}.png")
-                self.mask = pygame.mask.from_surface(self.image.convert_alpha())
+                self.image = self.fly[int(self.frame)]
+                self.mask = pygame.mask.from_surface(self.image)
         elif not self.died:
             self.frame += 0.1
             if self.frame >= 4:
                 self.died = True
-            self.image = pygame.image.load(f"sprites/die/{int(self.frame)}.png")
+            self.image = self.die[int(self.frame)]
         if 0 <= (self.rect.y + self.v / fps) <= floor - self.rect.height:
             self.rect.y += self.v / fps
 

@@ -2,9 +2,11 @@ import pygame.sprite
 from random import randint
 
 class Mob(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, roket, explosion):
         super().__init__()
-        self.image = pygame.image.load("sprites/roket.png").convert_alpha()
+        self.roket = roket
+        self.exp_im = explosion
+        self.image = self.roket
         self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
         self.rect.x = 1400
@@ -30,9 +32,38 @@ class Mob(pygame.sprite.Sprite):
             if self.frame == 0:
                 self.rect.x -= 250
                 self.rect.y -= 150
-            self.frame += 0.1
+            self.frame += 0.2
             if self.frame >= 8:
                 self.explosion = False
-            self.image = pygame.image.load(f"sprites/explosion/{int(self.frame)}.png")
+            self.image = self.exp_im[int(self.frame)]
         else:
             self.kill()
+
+
+class Coin(pygame.sprite.Sprite):
+    def __init__(self, coin):
+        super().__init__()
+        self.coin = coin
+        self.image = self.coin[0]
+        self.image = pygame.transform.scale(self.image, (30, 30))
+        self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
+        self.rect.x = 1400
+        self.rect.y = randint(1, int(675 - self.rect.height))
+        self.v = 150
+        self.frame = 0
+
+    def update(self, fps, player):
+        if pygame.sprite.collide_mask(self, player) and player.hp:
+            player.money += 1
+            self.kill()
+        if self.rect.x + self.rect.width < 0:
+            self.kill()
+        self.frame += 0.2
+        if self.frame > 9:
+            self.frame -= 9
+        self.image = self.coin[int(self.frame)]
+        self.image = pygame.transform.scale(self.image, (30, 30))
+        self.mask = pygame.mask.from_surface(self.image)
+        if not player.died:
+            self.rect.x -= self.v / fps
