@@ -4,7 +4,7 @@ from pygame.examples.music_drop_fade import volume
 from player import Player
 from mob import Mob, Coin, Heal
 from random import randint
-from se import start_screen, end_screen
+from se import start_screen, end_screen, pause_screen
 
 pygame.init()
 pygame.display.set_caption('Game')
@@ -45,9 +45,18 @@ while running:
             time = pygame.time.get_ticks()
         if pygame.time.get_ticks() - time >= 3000:
             time = 0
+            pygame.mixer.music.stop()
+            pygame.time.delay(500)
+            pygame.mixer.music.load('loose.mp3')
+            pygame.mixer.music.play()
             end_screen(screen, width, height, player.money, (pygame.time.get_ticks() - st) // 1000)
             player.died = False
             player.hp = 3
+            player.money = 0
+            mobs.empty()
+            pygame.mixer.music.load('song1.mp3')
+            pygame.mixer.music.play(-1)
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -55,6 +64,8 @@ while running:
             player.v *= -1
         if event.type == pygame.KEYUP and event.key == 32:
             player.v *= -1
+        if event.type == pygame.KEYDOWN and event.key == 27:
+            pause_screen(screen, width, height, player.money, (pygame.time.get_ticks() - st) // 1000)
     screen.fill((0, 0, 0))
 
     if randint(0, 100) == 1:
