@@ -11,7 +11,7 @@ def start_screen(screen, WIDTH, HEIGHT):
                   "Для полёта нажать пробел",
                   "Для регулировки громкости используйте стрелки вверх/вниз",
                   "Для просмотра статистики нажмите T",
-                  "Пауза esc"
+                  "Пауза esc",
                   "Для продолжения нажмите пробел"]
 
     fon = pygame.transform.scale(pygame.image.load('sprites/background3.png').convert(), (WIDTH, HEIGHT))
