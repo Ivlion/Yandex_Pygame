@@ -8,7 +8,7 @@ import ctypes
 ctypes.windll.user32.SetProcessDPIAware()
 
 pygame.init()
-pygame.display.set_caption('Game')
+pygame.display.set_caption('Flight')
 size = width, height = 1200, 675
 screen = pygame.display.set_mode(size)
 screen1 = pygame.display.set_mode(size)
@@ -16,6 +16,9 @@ font = pygame.font.Font(None, 30)
 
 pygame.mixer.music.load('song1.mp3')
 pygame.mixer.music.play(-1)
+pygame.mixer.init()
+sounds = (pygame.mixer.Sound('explosion.mp3'),
+          pygame.mixer.Sound('coins.mp3'))
 volume = 1
 
 start_screen(screen, width, height)
@@ -78,12 +81,12 @@ while running:
     screen.fill((0, 0, 0))
 
     if randint(0, 50) == 1:
-        mobs.add(Mob(mb_im['roket'], mb_im['explosion'], (pygame.time.get_ticks() - st) // 1000))
+        mobs.add(Mob(mb_im['roket'], mb_im['explosion'], (pygame.time.get_ticks() - st) // 1000, sounds[0]))
     if randint(0, 150) == 1:
-        mobs.add(Coin(mb_im['coin']))
+        mobs.add(Coin(mb_im['coin'], sounds[1]))
     if randint(0, 1000) == 1:
-        mobs.add(Heal(mb_im['heal']))
-    mobs.update(fps, player)
+        mobs.add(Heal(mb_im['heal'], sounds[1]))
+    mobs.update(fps, player, volume)
     player.update(fps, height)
     screen.blit(bg, (0 - scroll, 0))
     screen.blit(bg, (width - scroll, 0))

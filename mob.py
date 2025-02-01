@@ -2,8 +2,13 @@ import pygame.sprite
 from random import randint
 
 class Mob(pygame.sprite.Sprite):
-    def __init__(self, roket, explosion, t):
+    def __init__(self, roket, explosion, t, s):
         super().__init__()
+
+        pygame.mixer.init()
+        self.sound = s
+        self.channel = pygame.mixer.Channel(0)
+
         self.roket = roket
         self.exp_im = explosion
         self.image = self.roket
@@ -20,8 +25,10 @@ class Mob(pygame.sprite.Sprite):
         self.frame = 0
         self.explosion = False
 
-    def update(self, fps, player):
+    def update(self, fps, player, volume):
         if pygame.sprite.collide_mask(self, player) and player.hp:
+            self.channel.set_volume(volume)
+            self.channel.play(self.sound)
             self.explosion = True
             player.hp -= 1
             player.frame = 0
@@ -46,8 +53,13 @@ class Mob(pygame.sprite.Sprite):
 
 
 class Coin(pygame.sprite.Sprite):
-    def __init__(self, coin):
+    def __init__(self, coin, s):
         super().__init__()
+
+        pygame.mixer.init()
+        self.sound = s
+        self.channel = pygame.mixer.Channel(0)
+
         self.coin = coin
         self.image = self.coin[0]
         self.image = pygame.transform.scale(self.image, (30, 30))
@@ -58,8 +70,10 @@ class Coin(pygame.sprite.Sprite):
         self.v = 150
         self.frame = 0
 
-    def update(self, fps, player):
+    def update(self, fps, player, volume):
         if pygame.sprite.collide_rect(self, player) and player.hp:
+            self.channel.set_volume(volume)
+            self.channel.play(self.sound)
             player.money += 1
             self.kill()
         if self.rect.x + self.rect.width < 0:
@@ -75,8 +89,13 @@ class Coin(pygame.sprite.Sprite):
 
 
 class Heal(pygame.sprite.Sprite):
-    def __init__(self, heal):
+    def __init__(self, heal, s):
         super().__init__()
+
+        pygame.mixer.init()
+        self.sound = s
+        self.channel = pygame.mixer.Channel(0)
+
         self.heal = heal
         self.image = self.heal[0]
         self.image = pygame.transform.scale(self.image, (30, 30))
@@ -87,8 +106,10 @@ class Heal(pygame.sprite.Sprite):
         self.v = 150
         self.frame = 0
 
-    def update(self, fps, player):
+    def update(self, fps, player, volume):
         if pygame.sprite.collide_rect(self, player) and player.hp:
+            self.channel.set_volume(volume)
+            self.channel.play(self.sound)
             player.hp += (1 if player.hp < 5 else 0)
             self.kill()
         if self.rect.x + self.rect.width < 0:

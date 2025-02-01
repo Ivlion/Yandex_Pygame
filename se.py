@@ -9,7 +9,7 @@ def terminate():
     sys.exit()
 
 def start_screen(screen, WIDTH, HEIGHT):
-    intro_text = ["ИГРА", "",
+    intro_text = ["Flight", "",
                   "Для полёта нажать пробел",
                   "Для регулировки громкости используйте стрелки вверх/вниз",
                   "Для просмотра статистики нажмите T",
@@ -49,8 +49,7 @@ def start_screen(screen, WIDTH, HEIGHT):
 
 
 def end_screen(screen, WIDTH, HEIGHT, money, t):
-    intro_text = ["ТЫ ПРОИГРАЛ!!!", "",
-                  "ТЫ ЛОХ!!!",
+    intro_text = ["К сожалению вас сбила ракета", "",
                   f"Монет собрано: {money}",
                   f"Время жизни: {t} с", "",
                   "Для регулировки громкости используйте стрелки вверх/вниз",
