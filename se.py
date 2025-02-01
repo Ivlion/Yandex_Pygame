@@ -1,6 +1,7 @@
 import pygame
 import sys
 from statistic import save, table
+from threading import Thread
 
 
 def terminate():
@@ -39,7 +40,9 @@ def start_screen(screen, WIDTH, HEIGHT):
                 if (v := pygame.mixer.music.get_volume()) > 0:
                     pygame.mixer.music.set_volume(v - 0.1)
             elif event.type == pygame.KEYUP and event.key == 116:
-                table()
+                p = Thread(target=table, daemon=True)
+                p.start()
+                p.join()
             elif event.type == pygame.KEYUP and event.key == 32:
                 return
         pygame.display.flip()
@@ -79,9 +82,13 @@ def end_screen(screen, WIDTH, HEIGHT, money, t):
                 if (v := pygame.mixer.music.get_volume()) > 0:
                     pygame.mixer.music.set_volume(v - 0.1)
             elif event.type == pygame.KEYUP and event.key == 116:
-                table()
+                p = Thread(target=table, daemon=True)
+                p.start()
+                p.join()
             elif event.type == pygame.KEYUP and event.key == 115:
-                save(money, t)
+                p = Thread(target=save, args=(money, t), daemon=True)
+                p.start()
+                p.join()
             elif event.type == pygame.KEYUP and event.key == 32:
                 return
         pygame.display.flip()

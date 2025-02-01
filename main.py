@@ -3,6 +3,9 @@ from player import Player
 from mob import Mob, Coin, Heal
 from random import randint
 from se import start_screen, end_screen, pause_screen
+import ctypes
+
+ctypes.windll.user32.SetProcessDPIAware()
 
 pygame.init()
 pygame.display.set_caption('Game')

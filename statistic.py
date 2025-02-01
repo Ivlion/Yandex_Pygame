@@ -133,4 +133,4 @@ def table():
     ex = Table()
     ex.show()
     app.exec()
-table()
+#table()
