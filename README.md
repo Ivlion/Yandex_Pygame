@@ -15,3 +15,7 @@
 - csv(Работа с csv файлом)
 - ctypes(Отключение масштабирования)
 - threading(Выделение окон PyQt6 в отдельный поток)
+
+
+  ![Снимок экрана 2025-02-01 191640](https://github.com/user-attachments/assets/0de66cb0-1f5c-4fc6-a887-ce05ebfe8fb1)
+![Снимок экрана 2025-02-01 191846](https://github.com/user-attachments/assets/800a4a89-9130-4f41-b41b-9fbbf9c64a4f)
