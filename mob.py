@@ -2,7 +2,7 @@ import pygame.sprite
 from random import randint
 
 class Mob(pygame.sprite.Sprite):
-    def __init__(self, roket, explosion):
+    def __init__(self, roket, explosion, t):
         super().__init__()
         self.roket = roket
         self.exp_im = explosion
@@ -12,6 +12,11 @@ class Mob(pygame.sprite.Sprite):
         self.rect.x = 1400
         self.rect.y = randint(1, int(675 - self.rect.height))
         self.v = 300
+        k = 1.0
+        if k + (0.2 * (t // 10)) <= 900:
+            self.v *= k + (0.2 * (t // 20))
+        else:
+            self.v = 900
         self.frame = 0
         self.explosion = False
 

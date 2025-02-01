@@ -75,7 +75,7 @@ while running:
     screen.fill((0, 0, 0))
 
     if randint(0, 50) == 1:
-        mobs.add(Mob(mb_im['roket'], mb_im['explosion']))
+        mobs.add(Mob(mb_im['roket'], mb_im['explosion'], (pygame.time.get_ticks() - st) // 1000))
     if randint(0, 150) == 1:
         mobs.add(Coin(mb_im['coin']))
     if randint(0, 1000) == 1:
