@@ -69,9 +69,11 @@ while running:
         if event.type == pygame.KEYDOWN and event.key == 1073741906:
             if (v := pygame.mixer.music.get_volume()) < 1:
                 pygame.mixer.music.set_volume(v + 0.1)
+                volume += 0.1
         if event.type == pygame.KEYDOWN and event.key == 1073741905:
             if (v := pygame.mixer.music.get_volume()) > 0:
                 pygame.mixer.music.set_volume(v - 0.1)
+                volume -= 1
         if event.type == pygame.KEYDOWN and event.key == 32:
             player.v *= -1
         if event.type == pygame.KEYUP and event.key == 32:
