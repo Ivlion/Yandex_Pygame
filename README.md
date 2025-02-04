@@ -26,4 +26,5 @@
 - threading: Библиотека для выделения окон PyQt6 в отдельный поток, что позволяет игре работать более плавно и отзывчиво.
 
   ![Снимок экрана 2025-02-01 191640](https://github.com/user-attachments/assets/0de66cb0-1f5c-4fc6-a887-ce05ebfe8fb1)
-![Снимок экрана 2025-02-01 191846](https://github.com/user-attachments/assets/800a4a89-9130-4f41-b41b-9fbbf9c64a4f)
+![Снимок экрана 2025-02-01 191846](https://github.com/user-attachments/assets/800a4a89-9130-4f41-b41b-9fbbf9c64a4f)![Снимок экрана 2025-02-01 195449](https://github.com/user-attachments/assets/f5b9c06e-7564-44e7-bdeb-7f757c791617)
+
